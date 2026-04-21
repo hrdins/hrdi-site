@@ -3,401 +3,297 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>معهد تطوير الموارد البشرية | HRDI</title>
+    <title>معهد تطوير الموارد البشرية | HRDI 2026</title>
     <link href="https://googleapis.com" rel="stylesheet">
-<style>
-    /* التنسيق الأساسي للموقع */
-    :root {
-        --primary-blue: #1d2b58; 
-        --accent-gold: #c5a059;  
-    }
+    <style>
+        :root { --primary: #1d2b58; --gold: #c5a059; --bg: #f8fafc; --white: #ffffff; --red: #ce1126; }
+        * { box-sizing: border-box; }
+        body { font-family: 'Cairo', sans-serif; margin: 0; background: var(--bg); color: #333; scroll-behavior: smooth; }
 
-    body {
-        font-family: 'Cairo', sans-serif;
-        direction: rtl;
-        text-align: right;
-        margin: 0;
-        background-color: #f8f9fa;
-    }
-
-    /* إصلاح تداخل النصوص العربي والإنجليزي (مثل CCNA و ICDL) */
-    .course-card p, 
-    .course-card li, 
-    .course-card h3 {
-        unicode-bidi: plaintext; /* الحل الجذري للمشكلة */
-        text-align: right;
-        line-height: 1.8;
-    }
-
-    .course-card ul {
-        padding-right: 20px;
-        list-style-type: disc;
-    }
-
-    
-/* تنسيق الحاوية الكبرى للبطاقات */
-.course-grid {
-    display: grid;
-    /* يضمن وجود 4 أعمدة في الشاشات الكبيرة */
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    /* هذا السطر هو الحل: يضع مسافة 25 بكسل بين كل بطاقة وأخرى */
-    gap: 25px; 
-    padding: 40px 5%;
-    background-color: #f8f9fa; /* لون خلفية باهت ليظهر بياض البطاقات */
+        /* شريط الأخبار */
+        .ticker { background: var(--red); color: white; padding: 12px; overflow: hidden; font-weight: 800; border-bottom: 3px solid var(--gold); }
+        
+        /* الهيدر والقائمة */
+        header { background: white; padding: 20px 8%; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 4px 20px rgba(0,0,0,0.1); position: sticky; top: 0; z-index: 1000; }
+        .logo-box { display: flex; align-items: center; gap: 10px; }
+        .logo-box img { height: 180px; }
+.logo-text h2 {
+    margin: 0;
+    color: var(--primary);
+    font-size: 2.5rem; /* تكبير الحجم بشكل ملحوظ */
+    font-weight: 900;   /* جعل الخط عريض جداً */
+    letter-spacing: -1px; /* تقريب الحروف ليعطي مظهراً عصرياً */
+    line-height: 1;
 }
+        nav ul { list-style: none; display: flex; gap: 20px; margin: 0; padding: 0; }
+        nav a { text-decoration: none; color: var(--primary); font-weight: 700; font-size: 0.9rem; transition: 0.3s; }
+        nav a:hover { color: var(--gold); }
 
-/* تنسيق البطاقة الفردية */
-.course-card {
-    background: white;
-    padding: 25px;
-    border-radius: 12px;
-    box-shadow: 0 10px 20px rgba(0,0,0,0.05); /* ظل خفيف لفصل البطاقة عن الخلفية */
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    /* يضمن عدم تلاصق البطاقات حتى لو فشل الـ Grid */
-    margin-bottom: 20px; 
-    border: 1px solid #eee; /* إطار خفيف جداً للتحديد */
-}
+        /* القسم الرئيسي - الصفحة الرئيسية */
+        .hero { background: linear-gradient(135deg, var(--primary) 0%, #2a3d7d 100%); color: white; padding: 120px 20px; text-align: center; }
+        .hero h1 { font-size: 4.5rem; margin: 0; line-height: 1.5; }
+        .hero p { font-size: 4.3rem; margin-top: 20px; opacity: 0.9; }
 
-/* تنسيق الأزرار لضمان عدم تمددها خارج البطاقة */
-.btn {
-    display: block;
-    width: 100%;
-    padding: 15px 0;
-    margin-top: 20px; /* مسافة فوق الزر ليفصله عن النص */
-    border-radius: 8px;
-    text-align: center;
-    text-decoration: none;
-    font-weight: bold;
-    box-sizing: border-box; /* يضمن أن الـ Padding لا يزيد عرض الزر */
-}
+        /* الإحصائيات */
+        .stats { display: flex; justify-content: space-around; background: var(--primary); color: white; padding: 40px 5%; text-align: center; border-bottom: 5px solid var(--gold); }
+        .stat-item h2 { color: var(--gold); margin: 0; font-size: 2.5rem; font-weight: 900; }
 
+        /* قسم الرؤية والرسالة */
+        .vision-section { background: white; padding: 80px 10%; display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
+        .vision-box { padding: 40px; border-radius: 30px; background: var(--bg); border-right: 8px solid var(--gold); }
+        .vision-box h2 { color: var(--primary); margin-top: 0; }
 
-    /* تنسيق الأزرار */
-    .btn {
-        display: block;
-        width: 100%;
-        padding: 12px;
-        background-color: var(--primary-blue);
-        color: white;
-        text-align: center;
-        text-decoration: none;
-        border-radius: 6px;
-        font-weight: bold;
-        margin-top: auto; /* يدفع الزر للأسفل */
-    }
-</style>
+        .container { max-width: 1400px; margin: 0 auto; padding: 0 20px; }
+
+        /* البطاقات */
+        .course-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px; margin: 80px 0; }
+        .card { background: white; border-radius: 25px; overflow: hidden; box-shadow: 0 15px 35px rgba(0,0,0,0.1); border-top: 6px solid var(--gold); display: flex; flex-direction: column; transition: 0.4s; text-align: center; }
+        .card:hover { transform: translateY(-15px); }
+        .visual-banner { height: 160px; display: flex; flex-direction: column; justify-content: center; align-items: center; color: white; }
+        .bg-it { background: linear-gradient(45deg, #1d2b58, #3a53a4); }
+        .bg-admin { background: linear-gradient(45deg, #c5a059, #e6b86b); }
+        .bg-lang { background: linear-gradient(45deg, #ce1126, #ff4d4d); }
+        .bg-pc { background: linear-gradient(45deg, #2980b9, #3498db); }
+        .visual-banner span { font-size: 3.5rem; }
+
+        .card-content { padding: 25px; flex-grow: 1; }
+        .card h3 { color: var(--primary); font-size: 1.3rem; font-weight: 900; }
+        .enroll-btn { background: var(--primary); color: white; border: none; padding: 18px; font-family: 'Cairo'; font-weight: 800; cursor: pointer; width: 100%; font-size: 1.1rem; }
+
+        /* قسم اتصل بنا */
+        .contact-section { background: var(--primary); color: white; padding: 80px 10%; border-radius: 50px 50px 0 0; margin-top: 80px; }
+        .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; }
+        .contact-info h2 { color: var(--gold); font-size: 2.5rem; }
+        .contact-item { display: flex; align-items: center; gap: 15px; margin-bottom: 25px; font-size: 1.2rem; }
+        .contact-item span { background: var(--gold); color: var(--primary); width: 40px; height: 40px; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-weight: bold; }
+
+        /* نموذج التسجيل العملاق */
+        .reg-full { background: white; max-width: 1000px; margin: 80px auto; padding: 60px; border-radius: 40px; box-shadow: 0 40px 80px rgba(0,0,0,0.15); border-right: 15px solid var(--gold); }
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px; }
+        input, select { padding: 15px; border: 1px solid #ddd; border-radius: 12px; font-family: 'Cairo'; width: 100%; font-size: 1rem; background: #fdfdfd; }
+        .submit-btn { width: 100%; background: var(--gold); color: white; padding: 25px; border: none; border-radius: 20px; font-size: 1.6rem; font-weight: 900; cursor: pointer; margin-top: 20px; }
+
+        .wa-float { position: fixed; bottom: 40px; left: 40px; background: #25d366; width: 70px; height: 70px; border-radius: 50%; display: flex; justify-content: center; align-items: center; z-index: 10000; box-shadow: 0 10px 30px rgba(37, 211, 102, 0.4); }
+
+        footer { background: #151e3d; color: white; text-align: center; padding: 40px; border-top: 1px solid rgba(255,255,255,0.1); }
+
+        @media (max-width: 992px) { .vision-section, .contact-grid, .form-row { grid-template-columns: 1fr; } header { flex-direction: column; gap: 15px; } }
+    </style>
 </head>
-<body>
+<body>    <div class="ticker"><marquee scrollamount="9">🎓 أهلاً بكم في معهد تطوير الموارد البشرية لعام 2026 .. التسجيل متاح الآن لجميع الدبلومات والدورات .. بادر بحجز مقعدك</marquee></div>
 
-    <header>
-        <div class="logo-container">
-            <!-- استبدل الرابط أدناه برابط صورة شعارك الفعلية -->
-            <img src="REPLACE_WITH_YOUR_IMAGE_URL" alt="HRDI Logo">
+    <header id="home">
+        <div class="logo-box">
+            <img src="logo.jpg" alt="Logo">
+            <div class="logo-text"><h2>معهد تطوير الموارد البشرية</h2></div>
         </div>
         <nav>
-            <a href="#">الرئيسية</a>
-            <a href="#">البرامج التدريبية</a>
-            <a href="#">عن المعهد</a>
-            <a href="#">التسجيل</a>
+            <ul>
+                <li><a href="#home">الرئيسية</a></li>
+                <li><a href="#vision">رؤيتنا</a></li>
+                <li><a href="#courses">الدورات</a></li>
+                <li><a href="#register">التسجيل</a></li>
+                <li><a href="#contact">اتصل بنا</a></li>
+            </ul>
         </nav>
     </header>
 
-   
-
-    <footer>
-        <p>HRDI - Human Resources Development Institute</p>
-        <p>© 2024 جميع الحقوق محفوظة للمعهد</p>
-    </footer>
-
-</body>
-</html>
-
+    <!-- الصفحة الرئيسية -->
     <section class="hero">
-        <h1>طوّر مستقبلك المهني اليوم</h1>
-        <p>نقدم برامج تدريبية معتمدة لتأهيل الكوادر البشرية وفق أعلى المعايير العالمية.</p>
-        <a href="#courses" class="btn">تصفح البرامج التدريبية</a>
+        <h1>نصنع القادة..<br>ونطور الكفاءات الوطنية</h1>
+        <p>بوابتك نحو مستقبل مهني واعد في عام 2026</p>
+        <br>
+        <a href="#register" style="background:var(--gold); color:white; padding:15px 40px; border-radius:50px; text-decoration:none; font-weight:bold; font-size:1.2rem;">ابدأ رحلتك الآن</a>
     </section>
 
-    <section class="features">
-        <div class="feature-card">
-            <h3>📜 شهادات معتمدة</h3>
-            <p>جميع دوراتنا معتمدة من الجهات الرسمية.</p>
+    <section class="stats">
+        <div class="stat-item"><h2>+5,000</h2><p>خريج ناجح</p></div>
+        <div class="stat-item"><h2>2026</h2><p>أحدث المناهج</p></div>
+        <div class="stat-item"><h2>100%</h2><p>تدريب عملي</p></div>
+    </section>
+
+    <!-- رؤية المعهد -->
+    <section class="vision-section" id="vision">
+        <div class="vision-box">
+            <h2>رؤيتنا 👁️</h2>
+            <p>أن نكون المركز الرائد والأول في تدريب وتأهيل الكوادر الوطنية في المنطقة، للمساهمة بفعالية في تحقيق رؤية المملكة 2030 من خلال مخرجات تعليمية تضاهي المعايير العالمية.</p>
         </div>
-        <div class="feature-card">
-            <h3>👨‍🏫 خبراء التدريب</h3>
-            <p>نخبة من المدربين ذوي الخبرة العملية الطويلة.</p>
-        </div>
-        <div class="feature-card">
-            <h3>💻 تدريب مرن</h3>
-            <p>خيارات حضورية وعن بُعد تناسب وقتك.</p>
+        <div class="vision-box">
+            <h2>رسالتنا ✉️</h2>
+            <p>تقديم برامج تدريبية تخصصية (تقنية وإدارية ولغوية) تجمع بين المنهج العلمي والتطبيق المهني، وتوفير بيئة تعليمية متطورة تساعد المتدربين على التفوق في سوق العمل.</p>
         </div>
     </section>
 
-   <section class="courses" id="courses">
-        <h2 style="text-align:center; color: var(--primary-blue); font-size: 2.2rem;">الدبلومات المهنية المعتمدة</h2>
-        <p style="text-align:center; color: #666; margin-bottom: 40px;">نخبة من البرامج التدريبية المصممة لتلبية احتياجات سوق العمل السعودي</p>
-        
+    <div class="container">
+        <!-- الدورات -->
+        <h2 style="text-align:center; color:var(--primary); font-size:2.5rem; margin-top:80px;" id="courses">البرامج التدريبية المتاحة 🎓</h2>
         <div class="course-grid">
- <!-- 3. دورات اللغة الإنجليزية (جديد) -->
-            <div class="course-item" style="border-top: 5px solid #2ecc71;"> <!-- لون أخضر هادئ للغات -->
-                <div style="font-size: 40px; margin-bottom: 15px;">🔤</div>
-                <h3 style="color:var(--primary-blue)">دورات اللغة الإنجليزية</h3>
-                <p>برامج مكثفة لتطوير مهارات المحادثة والكتابة المهنية، وإعدادك للاختبارات العالمية.</p>
-                
-                <ul style="text-align: right; padding-right: 20px; font-size: 0.9rem; color: #555; line-height: 1.8;">
-                    <li>اللغة الإنجليزية العامة (مستويات مبتدئ - متقدم).</li>
-                    <li>الإنجليزية للأعمال (Business English).</li>
-                    <li>دورة التحضير لاختبار الآيلتس (IELTS).</li>
-                    <li>مهارات المحادثة بطلاقة (Conversation).</li>
-                </ul>
-                
-                <div style="margin-top: 25px; border-top: 1px solid #eee; padding-top: 15px;">
-                    <span style="background: #d4edda; color: #155724; padding: 5px 10px; border-radius: 4px; font-size: 0.8rem; font-weight: bold;">قسم اللغات</span>
-                    <a href="#" class="btn" style="display: block; margin-top: 15px; text-align: center; background-color: #27ae60;">سجل الآن</a>
+            <div class="card">
+                <div class="visual-banner bg-it"><span>🌐</span></div>
+                <div class="card-content">
+                    <h3>دبلوم شبكات الحاسب</h3>
+                    <p>إدارة سيسكو (CCNA) لعام 2026 وأمن الشبكات المتقدم.</p>
                 </div>
+                <button onclick="enroll('دبلوم شبكات الحاسب')" class="enroll-btn">سجل الآن</button>
             </div>
-            
-            <!-- 1. دبلوم الإدارة المكتبية (جديد) -->
-            <div class="course-item" style="border-top: 5px solid var(--accent-gold);">
-                <div style="font-size: 40px; margin-bottom: 15px;">📂</div>
-                <h3 style="color:var(--primary-blue)">دبلوم الإدارة المكتبية</h3>
-                <p>إعداد كوادر إدارية متميزة قادرة على إدارة المكاتب والعمليات السكرتارية باحترافية عالية.</p>
-                
-                <ul style="text-align: right; padding-right: 20px; font-size: 0.9rem; color: #555; line-height: 1.8;">
-                    <li>إدارة المكاتب والسكرتارية التنفيذية.</li>
-                    <li>مهارات التواصل وإعداد التقارير والمراسلات.</li>
-                    <li>تطبيقات الحاسب الآلي في الأعمال المكتبية.</li>
-                    <li>إدارة الوقت وتنظيم الاجتماعات والفعاليات.</li>
-                </ul>
-                
-                <div style="margin-top: 25px; border-top: 1px solid #eee; padding-top: 15px;">
-                    <span style="background: #fff3cd; color: #856404; padding: 5px 10px; border-radius: 4px; font-size: 0.8rem; font-weight: bold;">التقنية الإدارية</span>
-                    <a href="#" class="btn" style="display: block; margin-top: 15px; text-align: center;">سجل الآن</a>
+            <div class="card">
+                <div class="visual-banner bg-admin"><span>📂</span></div>
+                <div class="card-content">
+                    <h3>دبلوم الإدارة المكتبية</h3>
+                    <p>السكرتارية التنفيذية الحديثة واستخدام الذكاء الاصطناعي في الإدارة.</p>
                 </div>
+                <button onclick="enroll('دبلوم الإدارة المكتبية')" class="enroll-btn">سجل الآن</button>
             </div>
-
-            <!-- 2. دبلوم شبكات الحاسب -->
-            <div class="course-item" style="border-top: 5px solid var(--primary-blue);">
-                <div style="font-size: 40px; margin-bottom: 15px;">🌐</div>
-                <h3 style="color:var(--primary-blue)">دبلوم شبكات الحاسب</h3>
-                <p>تخصص تقني متقدم لتركيب وإدارة وحماية الشبكات السلكية واللاسلكية وأنظمة السيرفرات.</p>
-                
-                <ul style="text-align: right; padding-right: 20px; font-size: 0.9rem; color: #555; line-height: 1.8;">
-                    <li>تصميم وإدارة الشبكات (CCNA).</li>
-                    <li>أمن الشبكات والمعلومات.</li>
-                    <li>إدارة أنظمة التشغيل (Windows Server).</li>
-                    <li>صيانة الحاسب والدعم الفني التقني.</li>
-                </ul>
-                
-                <div style="margin-top: 25px; border-top: 1px solid #eee; padding-top: 15px;">
-                    <span style="background: #e8f0fe; color: #1d2b58; padding: 5px 10px; border-radius: 4px; font-size: 0.8rem; font-weight: bold;">تقنية المعلومات</span>
-                    <a href="#" class="btn" style="display: block; margin-top: 15px; text-align: center; background-color: var(--primary-blue);">سجل الآن</a
-                       </div>
- 			</div>
-       </div>
-<!-- 4. دورات الحاسب الآلي (جديد) -->
-            <div class="course-item" style="border-top: 5px solid #3498db;"> <!-- لون أزرق سماوي للحاسب -->
-                <div style="font-size: 40px; margin-bottom: 15px;">🖥️</div>
-                <h3 style="color:var(--primary-blue)">دورات الحاسب الآلي</h3>
-                <p>برامج تطويرية قصيرة تهدف لمحو الأمية الرقمية وإتقان البرامج المكتبية والتقنية.</p>
-                
-                <ul style="text-align: right; padding-right: 20px; font-size: 0.9rem; color: #555; line-height: 1.8;">
-                    <li>مهارات الحاسب الآلي (كامبردج / ICDL).</li>
-                    <li>إتقان حزمة Microsoft Office (Word, Excel, PPT).</li>
-                    <li>دورة الطباعة السريعة وإدخال البيانات.</li>
-                    <li>مبادئ البرمجة وتصميم المواقع البسيطة.</li>
-                </ul>
-                
-                <div style="margin-top: 25px; border-top: 1px solid #eee; padding-top: 15px;">
-                    <span style="background: #d1ecf1; color: #0c5460; padding: 5px 10px; border-radius: 4px; font-size: 0.8rem; font-weight: bold;">تطوير مهارات</span>
-                    <a href="#" class="btn" style="display: block; margin-top: 15px; text-align: center; background-color: #3498db;">سجل الآن</a>
+            <div class="card">
+                <div class="visual-banner bg-lang"><span>🇬🇧</span></div>
+                <div class="card-content">
+                    <h3>دورات اللغة الإنجليزية</h3>
+                    <p>منهج بريطاني معتمد ونخبة من المدربين الأجانب (English Native).</p>
                 </div>
-      </div>
-
+                <button onclick="enroll('دورات اللغة الإنجليزية')" class="enroll-btn">سجل الآن</button>
+            </div>
+            <div class="card">
+                <div class="visual-banner bg-pc"><span>🖥️</span></div>
+                <div class="card-content">
+                    <h3>دورات الحاسب الآلي</h3>
+                    <p>إتقان حزمة Office 365 المتقدمة وشهادات الـ ICDL الدولية.</p>
+                </div>
+                <button onclick="enroll('دورات الحاسب الآلي')" class="enroll-btn">سجل الآن</button>
+            </div>
         </div>
-    </section>
 
-    <footer>
-        <p>جميع الحقوق محفوظة &copy; 2024 معهد تطوير الموارد البشرية</p>
-    </footer>
-
-
-
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>معهد تطوير الموارد البشرية | HRDI</title>
-    <link href="https://googleapis.com" rel="stylesheet">
-    <style>
-        :root {
-            --primary-blue: #1d2b58; 
-            --accent-gold: #c5a059;  
-            --light-bg: #f8f9fa;
-        }
-
-        body {
-            font-family: 'Cairo', sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: var(--light-bg);
-            color: #333;
-            line-height: 1.6;
-        }
-
-        /* الهيدر */
-        header {
-            background-color: white;
-            padding: 10px 5% ;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-        }
-
-        .logo-container img { height: 60px; width: auto; }
-
-        nav a {
-            color: var(--primary-blue);
-            text-decoration: none;
-            margin: 0 15px;
-            font-weight: bold;
-        }
-
-        /* القسم الرئيسي */
-        .hero {
-            background: linear-gradient(rgba(29, 43, 88, 0.8), rgba(29, 43, 88, 0.8)), 
-                        url('https://unsplash.com');
-            background-size: cover;
-            height: 400px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            color: white;
-            padding: 0 20px;
-        }
-
-        /* شبكة الدورات */
-        .courses-section { padding: 60px 5%; }
-        .course-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 20px;
-        }
-
-        .course-card {
-            background: white;
-            padding: 30px;
-            border-radius: 12px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-            border-top: 5px solid var(--accent-gold);
-            transition: 0.3s;
-        }
-
-        .course-card:hover { transform: translateY(-10px); }
-
-        .btn {
-            background-color: var(--accent-gold);
-            color: white;
-            padding: 10px 25px;
-            text-decoration: none;
-            border-radius: 5px;
-            display: inline-block;
-            margin-top: 15px;
-        }
-
-        /* نموذج التسجيل */
-        .reg-section { background: #f0f2f5; padding: 60px 5%; }
-        .reg-form {
-            max-width: 600px;
-            margin: 0 auto;
-            background: white;
-            padding: 40px;
-            border-radius: 15px;
-        }
-
-        input, select, textarea {
-            width: 100%;
-            padding: 12px;
-            margin: 10px 0;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            font-family: 'Cairo';
-        }
-
-        /* زر الواتساب المصلح (أيقونة فقط) */
-        .wa-btn {
-            position: fixed;
-            bottom: 25px;
-            left: 25px;
-            background-color: #25d366;
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-            z-index: 9999;
-            transition: 0.3s;
-            text-decoration: none;
-        }
-
-        .wa-btn:hover { transform: scale(1.1); background-color: #128c7e; }
-
-        footer { background: var(--primary-blue); color: white; text-align: center; padding: 20px; }
-    </style>
-</head>
-<body>
-
-    
-
-    
-
-    <section class="reg-section" id="register">
-        <div class="reg-form">
-            <h2 style="text-align:center">طلب تسجيل جديد</h2>
-            <form>
-                <input type="text" placeholder="الاسم الكامل" required>
-                <input type="tel" placeholder="رقم الجوال" required>
-                <select required>
-                    <option value="">اختر التخصص</option>
-                    <option>دبلوم شبكات الحاسب</option>
-                    <option>دبلوم الإدارة المكتبية</option>
-                    <option>دورات اللغة الإنجليزية</option>
-                    <option>دورات الحاسب الآلي</option>
-                </select>
-                <button type="submit" class="btn" style="width:100%; border:none; cursor:pointer; font-size:1.1rem">إرسال الطلب</button>
+        <!-- نموذج التسجيل الكامل -->
+        <section class="reg-full" id="register">
+            <h2 style="text-align:center; color:var(--primary); margin-top:0;">بوابة التسجيل الإلكتروني</h2>
+            <form id="hrdiForm2026">
+                <div class="form-row">
+                    <div><label>الاسم الكامل</label><input type="text" id="fn_name" placeholder="الاسم الرباعي" required></div>
+                    <div><label>رقم الجوال</label><input type="tel" id="fn_phone" placeholder="05xxxxxxxx" required></div>
+                </div>
+                <div class="form-row">
+                    <div><label>رقم الهوية</label><input type="number" id="fn_id" placeholder="السجل المدني" required></div>
+                    <div><label>الجنسية</label><input type="text" id="fn_nat" placeholder="سعودي / مقيم" required></div>
+                </div>
+                <div class="form-row">
+                    <div><label>المؤهل العلمي</label><select id="fn_edu" required><option value="">-- اختر --</option><option>ثانوي</option><option>دبلوم</option><option>بكالوريوس</option></select></div>
+                    <div><label>المدينة</label><input type="text" id="fn_city" placeholder="المدينة الحالية" required></div>
+                </div>
+                <div class="form-row">
+                    <div><label>البرنامج المطلوب</label>
+                        <select id="fn_course" required>
+                            <option value="">-- اختر الدورة --</option>
+                            <option value="دبلوم شبكات الحاسب">دبلوم شبكات الحاسب</option>
+                            <option value="دبلوم الإدارة المكتبية">دبلوم الإدارة المكتبية</option>
+                            <option value="دورات اللغة الإنجليزية">دورات اللغة الإنجليزية</option>
+                            <option value="دورات الحاسب الآلي">دورات الحاسب الآلي</option>
+                        </select>
+                    </div>
+                    <div><label>الحالة الوظيفية</label><select id="fn_job"><option>باحث عن عمل</option><option>موظف</option><option>طالب</option></select></div>
+                </div>
+                <button type="submit" class="submit-btn">تأكيد التسجيل (WhatsApp) ✅</button>
             </form>
-        </div>
-    </section>
+        </section>
 
-    <!-- زر الواتساب المصلح - أيقونة فقط -->
-    <a href="https://wa.me" target="_blank" class="wa-btn">
-        <svg viewBox="0 0 448 512" width="30" height="30" fill="white">
-            <path d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.4 17.7 68.9 27 106.1 27h.1c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157zm-157 341.6c-33.2 0-65.7-8.9-94-25.7l-6.7-4-69.8 18.3L72 359.2l-4.4-7c-18.5-29.4-28.2-63.3-28.2-98.2 0-101.7 82.8-184.5 184.6-184.5 49.3 0 95.6 19.2 130.4 54.1 34.8 34.9 56.2 81.2 56.1 130.5 0 101.8-84.9 184.6-186.6 184.6zm101.2-138.2c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8-3.7 5.6-14.3 18-17.6 21.8-3.2 3.7-6.5 4.2-12 1.4-32.6-16.3-54-29.1-75.5-66-5.7-9.8 5.7-9.1 16.3-30.3 1.8-3.7 .9-6.9-.5-9.7-1.4-2.8-12.5-30.1-17.1-41.2-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2-3.7 0-9.7 1.4-14.8 6.9-5.1 5.6-19.4 19-19.4 46.3 0 27.3 19.9 53.7 22.6 57.4 2.8 3.7 39.1 59.7 94.8 83.8 35.2 15.2 49 16.5 66.6 13.9 10.7-1.6 32.8-13.4 37.4-26.4 4.6-13 4.6-24.1 3.2-26.4-1.3-2.5-5-3.9-10.5-6.6z"/>
-        </svg>
+        <!-- اتصل بنا -->
+        <section class="contact-section" id="contact">
+            <div class="contact-grid">
+                <div class="contact-info">
+                    <h2>اتصل بنا 📞</h2>
+                    <p>يسعدنا تواصلكم معنا عبر القنوات الرسمية للمعهد:</p>
+                    <div class="contact-item"><span>📍</span> المملكة العربية السعودية - الخفجي</div>
+                    <div class="contact-item"><span>📞</span> 01376765252</div>
+                    <div class="contact-item"><span>📧</span> info@hrdi.edu.sa</div>
+                    <div class="contact-item"><span>📱</span> واتساب: 9661376765252</div>
+                </div> <div class="map-container" style="width: 90%; max-width: 1200px; margin: 0 auto; border-radius: 30px; overflow: hidden; box-shadow: 0 20px 40px rgba(0,0,0,0.1); border: 8px solid white;">
+        <!-- الصق الكود الذي نسخته من جوجل ماب مكان الإطار أدناه -->
+        <iframe 
+             src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3507.859412552675!2d48.497930423531784!3d28.453654092179363!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3fcc1dc116b51151%3A0xbb10b6d775a64603!2z2YXYudmH2K8g2KrYt9mI2YrYsSDYp9mE2YXZiNin2LHYryDYp9mE2KjYtNix2YrYqSDYp9mE2LnYp9mE2Yog2YTZhNiq2K_YsdmK2Kg!5e0!3m2!1sar!2sca!4v1776781034216!5m2!1sar!2sca" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+            height="450" 
+            style="border:0;" 
+            allowfullscreen="" 
+            loading="lazy" 
+            referrerpolicy="no-referrer-when-downgrade">
+        </iframe>
+    </div>
+            </div>
+        </section>
+    </div>
+<!-- ⭐ قسم آراء المتدربين (الخريجين) -->
+<section class="testimonials-section" style="padding: 80px 0; background-color: #fff;">
+    <div class="container">
+        <h2 style="text-align: center; font-family: 'Tajawal', sans-serif; color: #1d2b58; font-weight: 900; font-size: 2.8rem; margin-bottom: 50px;">
+            ماذا قال خريجونا؟ ✨
+        </h2>
+        
+        <div class="testi-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 30px; padding: 0 5%;">
+            
+            <!-- الرأي الأول -->
+            <div class="testi-card" style="background: #f8fafc; padding: 40px; border-radius: 25px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); border-right: 10px solid #c5a059; position: relative;">
+                <p style="font-family: 'Tajawal', sans-serif; font-size: 1.15rem; color: #444; line-height: 1.8; font-style: italic;">
+                    "التحقت بدبلوم شبكات الحاسب، وبفضل الله ثم المنهج العملي المتميز، تمكنت من اجتياز اختبارات سيسكو والحصول على وظيفة تقنية في وقت قياسي."
+                </p>
+                <div class="testi-info" style="display: flex; align-items: center; gap: 20px; margin-top: 30px;">
+                    <div style="width: 65px; height: 65px; background: #ddd; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 1.8rem; border: 3px solid #c5a059;">👤</div>
+                    <div>
+                        <h4 style="margin: 0; color: #1d2b58; font-family: 'Tajawal', sans-serif; font-weight: 800; font-size: 1.2rem;">أ. محمد العتيبي</h4>
+                        <small style="color: #c5a059; font-weight: bold;">خريج هندسة الشبكات</small>
+                    </div>
+                </div>
+            </div>
+
+            <!-- الرأي الثاني -->
+            <div class="testi-card" style="background: #f8fafc; padding: 40px; border-radius: 25px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); border-right: 10px solid #c5a059; position: relative;">
+                <p style="font-family: 'Tajawal', sans-serif; font-size: 1.15rem; color: #444; line-height: 1.8; font-style: italic;">
+                    "دورة اللغة الإنجليزية مع المدربين الأجانب كانت تجربة مختلفة تماماً. المنهج البريطاني ركز على المحادثة، والآن أتحدث بطلاقة في بيئة عملي."
+                </p>
+                <div class="testi-info" style="display: flex; align-items: center; gap: 20px; margin-top: 30px;">
+                    <div style="width: 65px; height: 65px; background: #ddd; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 1.8rem; border: 3px solid #c5a059;">👤</div>
+                    <div>
+                        <h4 style="margin: 0; color: #1d2b58; font-family: 'Tajawal', sans-serif; font-weight: 800; font-size: 1.2rem;">م. خالد الشمري</h4>
+                        <small style="color: #c5a059; font-weight: bold;">خريج اللغة الإنجليزية</small>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+<!-- قسم موقع المعهد -->
+<section class="map-section" style="padding: 60px 0; background: #fff; text-align: center;">
+    <h2 style="font-family: 'Tajawal', sans-serif; color: #1d2b58; font-weight: 900; font-size: 2.5rem; margin-bottom: 30px;">
+        موقعنا في مدينة الخفجي 📍
+    </h2>
+    
+   
+    
+    <p style="margin-top: 20px; font-family: 'Tajawal', sans-serif; color: #666; font-size: 1.2rem;">
+        المملكة العربية السعودية - المنطقة الشرقية - الخفجي
+    </p>
+</section>
+    <a href="https://wa.me" class="wa-float" target="_blank">
+        <svg viewBox="0 0 448 512" width="35" height="35" fill="white"><path d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.4 17.7 68.9 27 106.1 27h.1c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157zm-157 341.6c-33.2 0-65.7-8.9-94-25.7l-6.7-4-69.8 18.3L72 359.2l-4.4-7c-18.5-29.4-28.2-63.3-28.2-98.2 0-101.7 82.8-184.5 184.6-184.5 49.3 0 95.6 19.2 130.4 54.1 34.8 34.9 56.2 81.2 56.1 130.5 0 101.8-84.9 184.6-186.6 184.6zm101.2-138.2c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8-3.7 5.6-14.3 18-17.6 21.8-3.2 3.7-6.5 4.2-12 1.4-32.6-16.3-54-29.1-75.5-66-5.7-9.8 5.7-9.1 16.3-30.3 1.8-3.7 .9-6.9-.5-9.7-1.4-2.8-12.5-30.1-17.1-41.2-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2-3.7 0-9.7 1.4-14.8 6.9-5.1 5.6-19.4 19-19.4 46.3 0 27.3 19.9 53.7 22.6 57.4 2.8 3.7 39.1 59.7 94.8 83.8 35.2 15.2 49 16.5 66.6 13.9 10.7-1.6 32.8-13.4 37.4-26.4 4.6-13 4.6-24.1 3.2-26.4-1.3-2.5-5-3.9-10.5-6.6z"/></svg>
     </a>
 
     <footer>
-        <p>© 2024 معهد تطوير الموارد البشرية - جميع الحقوق محفوظة</p>
+        <p>© 2026 معهد تطوير الموارد البشرية | المملكة العربية السعودية</p>
+        <div style="font-size:0.8rem; opacity:0.6;">تويتر | انستقرام | لينكدإن</div>
     </footer>
 
-</body>
-
-
-
-
-
-</style>
+    <script>
+        function enroll(c) {
+            document.getElementById('fn_course').value = c;
+            document.getElementById('register').scrollIntoView({ behavior: 'smooth' });
+        }
+        document.getElementById('hrdiForm2026').onsubmit = function(e) {
+            e.preventDefault();
+            const n = document.getElementById('fn_name').value;
+            const p = document.getElementById('fn_phone').value;
+            const id = document.getElementById('fn_id').value;
+            const ed = document.getElementById('fn_edu').value;
+            const co = document.getElementById('fn_course').value;
+            const text = encodeURIComponent(`*طلب تسجيل رسمي 2026*\nالاسم: ${n}\nالجوال: ${p}\nالهوية: ${id}\nالمؤهل: ${ed}\nالدورة: ${co}`);
+            window.open(`https://wa.me?text=${text}`, '_blank');
+        };
+    </script>
 </body>
 </html>
-
